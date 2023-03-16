@@ -7,3 +7,7 @@
 ## How
 1. 利用GeoJSON，列出各縣市的範圍
 2. 再利用座標比對，得到正確縣市
+
+## Sample
+![](doc/taipei.png)
+![](doc/new_taipei.png)

@@ -40,9 +40,11 @@ class ContentViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let taipei = CLLocationCoordinate2D(latitude: 25.035915, longitude: 121.563619)
-        if let country = countries.first(where: taipei.is(in:)) {
-            print(country.properties.COUNTYNAME)
+        let taipei = MKPointAnnotation()
+        taipei.coordinate = CLLocationCoordinate2D(latitude: 25.035915, longitude: 121.563619)
+        if let country = countries.first(where: taipei.coordinate.is(in:)) {
+            taipei.title = country.properties.COUNTYNAME
+            mapView.addAnnotation(taipei)
             mapView.addOverlays(country.overlays)
             mapView.visibleMapRect = country.overlays
                 .map{$0.boundingMapRect}
