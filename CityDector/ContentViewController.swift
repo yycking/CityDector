@@ -43,7 +43,7 @@ class ContentViewController: NSViewController {
         let taipei = MKPointAnnotation()
         taipei.coordinate = CLLocationCoordinate2D(latitude: 25.035915, longitude: 121.563619)
         if let country = countries.first(where: taipei.coordinate.is(in:)) {
-            taipei.title = country.properties.COUNTYNAME
+            taipei.title = country.name
             mapView.addAnnotation(taipei)
             mapView.addOverlays(country.overlays)
             mapView.visibleMapRect = country.overlays
@@ -67,25 +67,3 @@ extension ContentViewController: MKMapViewDelegate {
         return renderer
     }
 }
-
-struct Country {
-    let overlays: [MKOverlay]
-    let properties: CountryProperties
-    
-    struct CountryProperties: Decodable {
-        let COUNTYNAME: String
-    }
-    
-    init?(feature: MKGeoJSONFeature)  {
-        guard
-            let data = feature.properties,
-            let properties = try? JSONDecoder().decode(CountryProperties.self, from: data),
-            let overlays = feature.geometry as? [MKOverlay]
-        else {
-            return nil
-        }
-        self.overlays = overlays
-        self.properties = properties
-    }
-}
-
